@@ -20,7 +20,6 @@ jobs:
           token_format: "access_token"
           workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_NAME }}
           service_account: ${{ secrets.GCP_WORKLOAD_IDENTITY_SA_EMAIL }}
-          token_format: "access_token"
           create_credentials_file: true
           activate_credentials_file: true
 
