@@ -1,0 +1,50 @@
+name: "Infrastructure Terraform Pipeline"
+
+on:
+  push:
+    branches:
+      - "master"
+
+jobs:
+  run:
+    name: "Workload Identity Job"
+    permissions:
+      id-token: write
+      contents: read
+    runs-on: "ubuntu-latest"
+    steps:
+      - name: "Auth in GCP"
+        id: "auth"
+        uses: "google-github-actions/auth@v1"
+        with:
+          token_format: "access_token"
+          workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_NAME }}
+          service_account: ${{ secrets.GCP_WORKLOAD_IDENTITY_SA_EMAIL }}
+          token_format: "access_token"
+          create_credentials_file: true
+          activate_credentials_file: true
+
+      # Checkout the repository to the GitHub Actions runner
+      - name: "Checkout"
+        uses: "actions/checkout@v3"
+
+      # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
+      - name: "Setup Terraform"
+        uses: "hashicorp/setup-terraform@v1"
+      
+      # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc
+      - name: "Terraform Init"
+        run: "terraform init"
+
+      # Checks that all Terraform configuration files adhere to a canonical format
+      - name: "Terraform Format"
+        run: "terraform fmt -check"
+
+      # Generates an execution plan for Terraform
+      - name: "Terraform Plan"
+        run: "terraform plan -input=false"
+
+      # On push to "main", build or change infrastructure according to Terraform configuration files
+      - name: "Terraform Apply"
+        if: github.ref == 'refs/heads/"main"' && github.event_name == 'push'
+          run: "terraform apply -auto-approve -input=false"
