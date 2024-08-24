@@ -13,6 +13,10 @@ jobs:
       contents: read
     runs-on: "ubuntu-latest"
     steps:
+      # Checkout the repository to the GitHub Actions runner
+      - name: "Checkout"
+        uses: "actions/checkout@v3"
+
       - name: "Auth in GCP"
         id: "auth"
         uses: "google-github-actions/auth@v1"
@@ -21,11 +25,6 @@ jobs:
           workload_identity_provider: ${{ secrets.GCP_WORKLOAD_IDENTITY_PROVIDER_NAME }}
           service_account: ${{ secrets.GCP_WORKLOAD_IDENTITY_SA_EMAIL }}
           create_credentials_file: true
-          activate_credentials_file: true
-
-      # Checkout the repository to the GitHub Actions runner
-      - name: "Checkout"
-        uses: "actions/checkout@v3"
 
       # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
       - name: "Setup Terraform"
