@@ -1,5 +1,5 @@
 resource "google_cloud_run_v2_service" "default" {
-  name     = "cloudrun-service"
+  name     = "test-service"
   location = var.location
   ingress  = "INGRESS_TRAFFIC_ALL"
 
@@ -7,5 +7,11 @@ resource "google_cloud_run_v2_service" "default" {
     containers {
       image = "us-docker.pkg.dev/cloudrun/container/hello"
     }
+  }
+
+  lifecycle {
+    ignore_changes = [
+      template.containers,
+    ]
   }
 }

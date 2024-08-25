@@ -1,4 +1,4 @@
-name: "Infrastructure Terraform Pipeline"
+name: "Infrastructure CI/CD"
 
 on:
   push:
@@ -7,16 +7,18 @@ on:
 
 jobs:
   run:
-    name: "Workload Identity Job"
+    name: "Terraform infrastructure Pipeline"
     permissions:
       id-token: write
       contents: read
     runs-on: "ubuntu-latest"
     steps:
+
       # Checkout the repository to the GitHub Actions runner
       - name: "Checkout"
         uses: "actions/checkout@v3"
 
+      # Authenticate to GCP using Workload Identity Federation
       - name: "Auth in GCP"
         id: "auth"
         uses: "google-github-actions/auth@v1"
@@ -26,11 +28,11 @@ jobs:
           service_account: ${{ secrets.GCP_WORKLOAD_IDENTITY_SA_EMAIL }}
           create_credentials_file: true
 
-      # Install the latest version of Terraform CLI and configure the Terraform CLI configuration file with a Terraform Cloud user API token
+      # Install the latest version of Terraform CLI
       - name: "Setup Terraform"
         uses: "hashicorp/setup-terraform@v1"
       
-      # Initialize a new or existing Terraform working directory by creating initial files, loading any remote state, downloading modules, etc
+      # Initializes Terraform
       - name: "Terraform Init"
         run: "terraform init"
 
@@ -42,6 +44,6 @@ jobs:
       - name: "Terraform Plan"
         run: "terraform plan -input=false"
 
-      # On push to "main", build or change infrastructure according to Terraform configuration files
+      # Builds or changes infrastructure according to Terraform configuration files
       - name: "Terraform Apply"
         run: "terraform apply -auto-approve -input=false"
