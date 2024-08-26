@@ -19,7 +19,7 @@ resource "google_cloud_run_v2_service" "default" {
 resource "google_cloud_run_v2_service_iam_member" "member" {
   location = var.location
   name     = google_cloud_run_v2_service.default.name
-  role     = "roles/viewer"
+  role     = "roles/run.invoker"
   member   = "allUsers"
 }
 
