@@ -15,6 +15,6 @@ terraform {
 
 provider "google" {
   # Configuration options
-  project = "log-gdc-poc"
-  region  = "europe-west3"
+  project = var.project_id
+  region  = var.location
 }
