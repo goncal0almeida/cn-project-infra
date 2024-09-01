@@ -44,7 +44,8 @@ module "lb-http" {
         {
         group = google_compute_region_network_endpoint_group.default.id }
       ]
-
+      protocol   = "HTTP"
+      enable_cdn = false
 
       log_config = {
         enable = false
