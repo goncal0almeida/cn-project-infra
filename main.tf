@@ -45,21 +45,14 @@
 #         group = google_compute_region_network_endpoint_group.default.id }
 #       ]
 #
-#       enable_cdn = false
 #
 #       log_config = {
 #         enable = false
 #       }
 #
 #       iap_config = {
-#         enable               = false
-#         oauth2_client_id     = null
-#         oauth2_client_secret = null
+#         enable = false
 #       }
-#
-#       description            = null
-#       custom_request_headers = null
-#       security_policy        = null
 #     }
 #   }
 # }
