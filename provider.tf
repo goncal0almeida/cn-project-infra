@@ -7,7 +7,7 @@ terraform {
   }
 
   backend "gcs" {
-    bucket = "cn-poc-terraform-remote-backend"
+    bucket = "cn-terraform-remote-backend-poc"
     prefix = "terraform/state"
   }
 }
