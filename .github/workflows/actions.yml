@@ -7,7 +7,6 @@ on:
 
 jobs:
   run:
-    if: false
     name: "Terraform infrastructure Pipeline"
     permissions:
       id-token: write
