@@ -4,7 +4,7 @@ variable "location" {
 }
 variable "project_id" {
   type    = string
-  default = "log-gdc-poc"
+  default = "empirical-oven-209411"
 }
 
 variable "dockerhub_username" {
