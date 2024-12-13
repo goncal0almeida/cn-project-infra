@@ -1,5 +1,6 @@
 # cn-project-infra
 Simple Productivity Web App repo deployed on Cloud Run using CI/CD, Infrastructure as Code (Terraform) and Docker.
+
 ![Architecture](app_arch.png)
 
 You can check the project's articles here:
